@@ -5,7 +5,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
@@ -13,11 +12,8 @@ import java.util.List;
 
 public class DataBase extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
-    // Database Name
     private static final String DATABASE_NAME = "taskerManager";
-    // tasks table name
     private static final String TABLE_TASKS = "tasks";
-    // tasks Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_TASKNAME = "taskName";
     private static final String KEY_STATUS = "status";
@@ -34,9 +30,7 @@ public class DataBase extends SQLiteOpenHelper {
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldV, int newV) {
-        // Drop older table if existed
-        db.execSQL("ROP TABLE IF EXISTS " + TABLE_TASKS);
-        // Create tables again
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TASKS);
         onCreate(db);
     }
     public void addTask(Task task) {
@@ -61,6 +55,7 @@ public class DataBase extends SQLiteOpenHelper {
                 taskList.add(task);
             } while (cursor.moveToNext());
         }
+        cursor.close();
         return taskList;
     }
     public void updateTask(Task task) {
@@ -68,7 +63,6 @@ public class DataBase extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_TASKNAME, task.getTaskName());
         values.put(KEY_STATUS, task.getStatus());
-        db.update(TABLE_TASKS, values, KEY_ID + " = ?",
-                new String[]{String.valueOf(task.getId())});
+        db.update(TABLE_TASKS, values, KEY_ID + " = ?", new String[]{String.valueOf(task.getId())});
     }
 }

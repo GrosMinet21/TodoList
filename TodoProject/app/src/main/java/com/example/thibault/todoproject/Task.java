@@ -1,8 +1,5 @@
 package com.example.thibault.todoproject;
 
-/**
- * Created by Thibault on 12/03/2016.
- */
 public class Task {
     private String taskName;
     private int status;
