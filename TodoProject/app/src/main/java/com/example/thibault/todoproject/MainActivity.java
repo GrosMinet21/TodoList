@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -25,11 +26,6 @@ public class MainActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                long[] id = new long[lv.getCheckedItemIds().length];
-                id = lv.getCheckedItemIds();
-                for(int i = 0; i<lv.getCheckedItemCount(); i++){
-                    modelItems[(int)id[i]].value = (modelItems[(int)id[i]].value +1 )/2 ;
-                }
                 EditText task = (EditText) findViewById(R.id.editText);
                 Model[] neu = new Model[modelItems.length+1];
                 for(int i = 0;i<modelItems.length; i++){
@@ -39,6 +35,13 @@ public class MainActivity extends AppCompatActivity {
                 modelItems = new Model[neu.length];
                 modelItems = neu;
                 update();
+            }
+        });
+        lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                modelItems[position].value = modelItems[position].value + 1 % 2 ;
             }
         });
 

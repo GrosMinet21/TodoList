@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 public class CustomAdapter extends ArrayAdapter{
-    Model[] modelItems = null;
+    Model[] modelItems;
     Context context;
     public CustomAdapter(Context context, Model[] resource) {
         super(context,R.layout.row,resource);
